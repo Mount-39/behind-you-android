@@ -1,0 +1,14 @@
+<ion-view view-title="Friends">
+    <ion-content ng-class="{expanded:isExpanded}">
+        <div class="content has-header">
+            <div class="list">
+                <a ng-click="userInfo($index)" class="item item-avatar item-icon-right" collection-repeat="friend in friendsInfo">
+                    <img src="img/user.jpg">
+                    <h2>{{friend.firstName}} {{friend.lastName}}</h2>
+                    <p>Last seen 5 min ago</p>
+                    <i class="icon ion-chatbubble muted"></i>
+                </a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

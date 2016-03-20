@@ -1,0 +1,78 @@
+<ion-view view-title="User Page">
+    <ion-content ng-class="{expanded:$scope.isExpanded}">
+        <div class="hero slide-up" style="background-image: url('img/login.jpg');">
+            <div class="content">
+                <div class="avatar" style="background-image: url('img/user.jpg');"></div>
+                <h3><a class="light">{{userInfo.firstName}} {{userInfo.lastName}}</a></h3>
+                <h4>{{userInfo.status}}</h4>
+            </div>
+        </div>
+
+        <h4 class="content padding">Info</h4>
+
+        <div ng-if="!userPage" class="list animate-fade-slide-in-right">
+            <div class="item">
+                <p>Name</p>
+
+                <h2>{{userInfo.firstName}}</h2>
+            </div>
+            <div class="item">
+                <p>Surname</p>
+
+                <h2>{{userInfo.lastName}}</h2>
+            </div>
+            <div class="item" ng-if="userInfo.country">
+                <p>Country</p>
+
+                <h2>{{userInfo.country}}</h2>
+            </div>
+            <div class="item" ng-if="userInfo.city">
+                <p>City</p>
+
+                <h2>{{userInfo.city}}</h2>
+            </div>
+        </div>
+
+        <div ng-if="userPage" class="list animate-fade-slide-in-right">
+            <form name="userForm" ng-submit="self.update()">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Name <u ng-if="registerForm.FirstName.$invalid">not valid</u></span>
+                    <input name="FirstName" ng-model="userInfo.firstName" ng-maxlength="20"
+                           type="text" placeholder="Name"
+                           pattern="^[A-Za-z0-9_]{1,20}$" required/>
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Surname <u ng-if="registerForm.LastName.$invalid">not valid</u></span>
+                    <input name="LastName" ng-model="userInfo.lastName" ng-maxlength="25" type="text"
+                           placeholder="Surname"
+                           ng-value="userInfo.lastName"
+                           pattern="^[A-Za-z0-9_]{1,25}$" required/>
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Country <u ng-if="registerForm.LastName.$invalid">not valid</u></span>
+                    <input name="LastName" ng-model="userInfo.country" ng-maxlength="25" type="text"
+                           placeholder="Country"
+                           ng-value="userInfo.country"
+                           pattern="^[A-Za-z0-9_]{0,25}$"/>
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">City <u ng-if="registerForm.LastName.$invalid">not valid</u></span>
+                    <input name="LastName" ng-model="userInfo.city" ng-maxlength="25" type="text" placeholder="City"
+                           ng-value="userInfo.city"
+                           pattern="^[A-Za-z0-9_]{0,25}$"/>
+                </label>
+
+                            <span>
+                <div class="row center animated bounceIn" ng-show="self.error">{{self.error}}</div>
+                <div class="padding animated fadeInUp">
+                    <button type="submit" class="button button-full button-assertive ink"
+                            ng-disabled="userForm.$invalid">
+                        Update
+                    </button>
+                </div>
+            </span>
+            </form>
+        </div>
+
+    </ion-content>
+</ion-view>

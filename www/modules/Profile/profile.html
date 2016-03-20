@@ -1,0 +1,38 @@
+<ion-view view-title="Profile">
+    <ion-content ng-class="{expanded:$scope.isExpanded}">
+        <div class="hero slide-up" style="background-image: url('img/login.jpg');">
+            <div class="content">
+                <div ui-sref="app.userPage({userInfo: userInfo})" class="avatar" style="background-image: url('img/user.jpg');"></div>
+                <h3><a class="light">{{userInfo.firstName}} {{userInfo.lastName}}</a></h3>
+                <h4 ng-click="statusPopup()"><u>{{userInfo.status}}</u></h4>
+                <h4 ng-click="statusPopup()" ng-if="!userInfo.status"><u>type here to set status</u></h4>
+            </div>
+        </div>
+        <div class="tabs tabs-dark tabs-icon-top static">
+            <a ui-sref="app.browse" class="tab-item">
+                <i class="icon ion-chatbubbles"></i> Chat
+            </a>
+            <a ui-sref="app.friends" class="tab-item">
+                <i class="icon ion-android-people"></i> Friends
+            </a>
+            <a ui-sref="app.browse" class="tab-item">
+                <i class="icon ion-map"></i> Map
+            </a>
+        </div>
+        <h4 class="content padding double-padding-x">News</h4>
+        <div class="list animate-fade-slide-in-right">
+            <a ui-sref="app.friends" class="item item-avatar item-icon-right">
+                <img src="img/user.jpg">
+                <h2>Friend 1</h2>
+                <p>He was behind you 5 min ago!</p>
+                <i class="icon ion-chatbubble muted"></i>
+            </a>
+          <a ui-sref="app.browse" class="item item-avatar item-icon-right">
+                <img src="img/menu.jpg">
+                <h2>Museum of Art</h2>
+                <p>Flat design master</p>
+                <i class="icon ion-more muted"></i>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>
