@@ -40,6 +40,7 @@
 
             <span>
                 <div class="row center animated bounceIn" ng-show="reg.error">{{reg.error}}</div>
+                <ion-spinner icon="ripple" class="spinner-assertive center" ng-if="reg.loadingSpinner"></ion-spinner>
                 <div class="padding animated fadeInUp">
                     <button type="submit" class="button button-full button-assertive ink"
                             ng-disabled="registerForm.$invalid"

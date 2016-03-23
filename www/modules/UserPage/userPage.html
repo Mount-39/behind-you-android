@@ -62,9 +62,12 @@
 
                             <span>
                 <div class="row center animated bounceIn" ng-show="self.error">{{self.error}}</div>
+                <ion-spinner icon="ripple" class="spinner-assertive center" ng-if="self.loadingSpinner"></ion-spinner>
                 <div class="padding animated fadeInUp">
                     <button type="submit" class="button button-full button-assertive ink"
-                            ng-disabled="userForm.$invalid">
+                            ng-disabled="userForm.$invalid"
+                            ng-show="!self.loadingSpinner"
+                      >
                         Update
                     </button>
                 </div>

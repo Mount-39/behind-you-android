@@ -24,7 +24,9 @@ angular.module('Friends', [])
 
         $scope.friendsId = [];
         $scope.friendsInfo = [];
+        $scope.search = {text: ''};
         $scope.userInfo = userInfo;
+        $scope.searchFriend = searchFriend;
 
 
         uploadFriends();
@@ -36,6 +38,7 @@ angular.module('Friends', [])
                     $scope.friendsId = data;
                     // return $scope.friendsId;
                 })
+                .then($scope.friendsInfo.length = 0)
                 .then(getFriendsInfo)
         }
 
@@ -50,6 +53,20 @@ angular.module('Friends', [])
         function userInfo(index){
             console.log($scope.friendsInfo[index]);
             $state.go('app.userPage', {userInfo: $scope.friendsInfo[index]})
+        }
+
+        function searchFriend(){
+
+            if(!$scope.search.text) {
+                uploadFriends();
+                return;
+            }
+
+            FriendsService.searchFriends($scope.search.text)
+                .then(function(result, error){
+                    console.log(result);
+                    $scope.friendsInfo = result;
+                })
         }
 
     });

@@ -1,4 +1,7 @@
-
+.spinner svg {
+    width: 19% !important;
+    height: 85px !important;
+}
 
 .shape-1 {
     text-shadow: rgb(30, 26, 35) 1px 1px,

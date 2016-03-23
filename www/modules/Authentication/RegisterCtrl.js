@@ -30,6 +30,7 @@ angular.module('Login')
         reg.error = $state.params.error;
         $scope.showingPassword = showingPassword;
         reg.signup = signup;
+        reg.loadingSpinner = false;
         $scope.passwordIs = false;
         $scope.passType = 'password';
 
@@ -42,6 +43,8 @@ angular.module('Login')
         }
 
         function signup(user){
+            reg.loadingSpinner = true;
+            reg.error = '';
             console.log(reg.firstName, reg.lastName, reg.email, reg.password);
 
             LoginService.signup(reg.firstName, reg.lastName, reg.email, reg.password, {})
@@ -55,6 +58,7 @@ angular.module('Login')
         }
 
         function showError(error) {
+            reg.loadingSpinner = false;
             console.log(error);
             reg.error = error.data.error_description || 'Unknown error from server';
             console.log(reg.error);

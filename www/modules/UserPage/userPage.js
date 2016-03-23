@@ -13,6 +13,7 @@ angular.module('UserPage', [])
         $scope.userPage = false;
 
         self.error = $state.params.error;
+        self.loadingSpinner = false;
         self.update = update;
 
 // Set Header
@@ -43,13 +44,16 @@ angular.module('UserPage', [])
         }
 
         function update(user){
+            self.loadingSpinner = true;
                 UserPageService.update($scope.userInfo.id, $scope.userInfo)
                     .then(function(data){
                         $scope.userInfo = data;
+                        self.loadingSpinner = false;
                     }, showError);
         }
 
         function showError(error) {
+            self.loadingSpinner = false;
             console.log(error);
             self.error = error && error.data || error.error_description || 'Unknown error from server';
         }
