@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
+
     <title></title>
 
     <link href='https://fonts.googleapis.com/css?family=RobotoDraft:400,500,700,400italic' rel='stylesheet' type='text/css'>
@@ -25,9 +27,13 @@
     <script src="lib/angularbknd-sdk/dist/backand.min.js"></script>
     <script src="lib/restangular/dist/restangular.js"></script>
     <script src="lib/lodash/lodash.js"></script>
+    <script src='lib/angular-google-maps/dist/angular-google-maps.min.js'></script>
+    <script src="lib/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
+
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyA2K6xW-Wy62QpOygphEUnWZ0xmSM2DAjo"></script>
 
     <!-- your app's app -->
     <script src="app/app.js"></script>
@@ -41,6 +47,7 @@
     <script src="modules/Friends/friendsService.js"></script>
     <script src="modules/UserPage/userPage.js"></script>
     <script src="modules/UserPage/userService.js"></script>
+    <script src="modules/Map/MapCtrl.js"></script>
   </head>
 
   <body ng-app="app">

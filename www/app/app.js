@@ -8,8 +8,8 @@ angular.module('app', [
     'ionic', 'backand',
     'ionic-material', 'ionMdInput',
     'restangular', 'ngCookies',
-    'sideMenu', 'Profile', 'Login',
-    'Friends', 'UserPage'
+    'sideMenu', 'Profile', 'Login','uiGmapgoogle-maps',
+    'Friends', 'UserPage', 'Map'
 ])
 
     .run(function ($ionicPlatform, $rootScope) {
@@ -34,7 +34,13 @@ angular.module('app', [
     })
 
 
-    .config(function (BackandProvider, $httpProvider, $stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+    .config(function (BackandProvider, $httpProvider, $stateProvider, $urlRouterProvider, $ionicConfigProvider, uiGmapGoogleMapApiProvider) {
+
+        uiGmapGoogleMapApiProvider.configure({
+                key: 'AIzaSyA2K6xW-Wy62QpOygphEUnWZ0xmSM2DAjo',
+            v: '3.20', //defaults to latest 3.X anyhow
+            libraries: 'weather,geometry,visualization'
+        });
 
         BackandProvider.setAppName('behindyou');
         BackandProvider.setSignUpToken('680c44f3-6cd5-4a32-a7cb-0130a6aa17f7');
@@ -97,6 +103,19 @@ angular.module('app', [
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/browse.html'
+                    }
+                }
+            })
+
+            .state('app.map', {
+                url: '/map',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'modules/Map/Map.html',
+                        controller: 'MapCtrl'
+                    },
+                    'fabContent': {
+                        template: ''
                     }
                 }
             })

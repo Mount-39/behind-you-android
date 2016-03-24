@@ -523,3 +523,14 @@ p {
 .item-md-label input.used~.input-label, .item-md-label input:focus~.input-label{
     opacity: 1;
 }
+
+/*
+        Map
+===============================*/
+
+.angular-google-map-container {
+    height: 100%;
+}
+.angular-google-map {
+    height: 300px;
+}
