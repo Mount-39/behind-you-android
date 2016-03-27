@@ -1,9 +1,30 @@
 <ion-view view-title="Map">
     <ion-content ng-class="{expanded:isExpanded}">
-        <div class="content has-header">
-            <div style="height: 100%">
-                <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+        <div id="map_canvas" class="animated fadeIn">
+                <ui-gmap-google-map center='map.center' zoom='map.zoom' options="options" events='events'>
+                    <ui-gmap-marker ng-if="addMarker" coords="marker.coords" click="marker.click"
+                                    options="marker.options" events="marker.events" idkey="marker.id">
+                    </ui-gmap-marker>
+                </ui-gmap-google-map>
+
+            <div class="btn-map row animated bounceIn" ng-if="!addMarker">
+                <button type="button" class="button button-dark ink col" ng-click="setMarker()">
+                    Start Chat
+                </button>
+                <button type="button" class="button button-assertive ink col">
+                    Chats list
+                </button>
             </div>
+
+            <div class="btn-map row" ng-if="addMarker">
+                <button type="button" class="button button-dark ink col" ng-click="cutMarker()">
+                    Cancel
+                </button>
+                <button type="button" class="button button-assertive ink col" ng-click="setHere()">
+                    Set here
+                </button>
+            </div>
+
 
         </div>
     </ion-content>

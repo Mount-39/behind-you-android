@@ -1,0 +1,35 @@
+<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title shape-register" style="font-size: 30px">Set up new chat</h1>
+    </ion-header-bar>
+    <ion-content>
+        <form name="setMarkerForm" ng-submit="">
+
+            <div>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Chat Name <u ng-if="registerForm.FirstName.$invalid">not valid</u></span>
+                    <input name="chatName" ng-model="chat.firstName" ng-maxlength="20"
+                           type="text" placeholder="Chat Name"
+                           pattern="^[A-Za-z0-9_]{1,20}$" required/>
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Description <u ng-if="registerForm.LastName.$invalid">not valid</u></span>
+                    <input name="description" ng-model="chat.lastName" ng-maxlength="50" type="text" placeholder="Description"
+                           pattern="^[A-Za-z0-9_]{1,50}$" required/>
+                </label>
+            </div>
+
+        <div class="padding animated fadeInUp">
+            <button type="submit" class="button button-full button-assertive ink"
+                    ng-disabled="registerForm.$invalid"
+                    ng-disabled="login.error">
+                Start chat
+            </button>
+            <button type="button" class="button button-full button-dark ink"
+                    ng-click="closeModal()">
+                Cancel
+            </button>
+        </div>
+            </form>
+    </ion-content>
+</ion-modal-view>
