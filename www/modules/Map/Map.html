@@ -1,7 +1,7 @@
 <ion-view view-title="Map">
-    <ion-content ng-class="{expanded:isExpanded}">
+    <ion-content ng-class="{expanded:isExpanded}" scroll='false'>
         <div id="map_canvas" class="animated fadeIn">
-                <ui-gmap-google-map center='map.center' zoom='map.zoom' options="options" events='events' bounds="map.bounds">
+                <ui-gmap-google-map data-tap-disabled="true" center='map.center' zoom='map.zoom' options="options" events='events' bounds="map.bounds">
                     <ui-gmap-marker ng-if="addMarker" coords="marker.coords" click="marker.click"
                                     options="marker.options" events="marker.events" idkey="marker.id">
                     </ui-gmap-marker>

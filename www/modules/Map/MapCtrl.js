@@ -127,17 +127,22 @@ angular.module('Map', [])
                 template: 'Loading...'
             });
 
-
             navigator.geolocation.getCurrentPosition(function (position) {
                 $scope.map.center.latitude = position.coords.latitude;
                 $scope.map.center.longitude = position.coords.longitude;
 
+                console.log(position);
                 //allowedBounds = new google.maps.LatLngBounds(
                 //    new google.maps.LatLng($scope.map.center.latitude - 0.005, $scope.map.center.longitude + 0.005),
                 //    new google.maps.LatLng($scope.map.center.latitude + 0.005, $scope.map.center.longitude - 0.005)
                 //);
 
                 $ionicLoading.hide();
+            }, function(error){
+                console.log(error.message);
+            }, {
+                enableHighAccuracy: true
+                ,timeout : 5000
             });
 
             $scope.options = {scrollwheel: false};
