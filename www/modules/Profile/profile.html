@@ -20,17 +20,11 @@
             </a>
         </div>
         <h4 class="content padding double-padding-x">News</h4>
-        <div class="list animate-fade-slide-in-right">
-            <a ui-sref="app.friends" class="item item-avatar item-icon-right">
-                <img src="img/user.jpg">
-                <h2>Friend 1</h2>
-                <p>He was behind you 5 min ago!</p>
-                <i class="icon ion-chatbubble muted"></i>
-            </a>
-          <a ui-sref="app.browse" class="item item-avatar item-icon-right">
-                <img src="img/menu.jpg">
-                <h2>Museum of Art</h2>
-                <p>Flat design master</p>
+        <div class="list">
+            <a class="item item-avatar item-icon-right" collection-repeat="feed in news">
+                <img src="{{feed.multimedia.resource.src}}">
+                <h2>{{feed.display_title}}</h2>
+                <p>{{feed.summary_short}}</p>
                 <i class="icon ion-more muted"></i>
             </a>
         </div>

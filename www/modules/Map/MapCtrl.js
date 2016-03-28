@@ -4,7 +4,7 @@ angular.module('Map', [])
 
     .controller('MapCtrl', function ($scope, $stateParams, $timeout, $ionicPopup,
                                      ionicMaterialMotion, ionicMaterialInk, uiGmapGoogleMapApi,
-                                     $ionicLoading, $ionicModal) {
+                                     $ionicLoading, $ionicModal, MapService, $rootScope) {
 
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -12,16 +12,22 @@ angular.module('Map', [])
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
 
+        $scope.chat = {};
         $scope.positions = [];
+        $scope.allChatMarkers = [];
         $scope.addMarker = false;
         $scope.setMarker = setMarker;
         $scope.cutMarker = cutMarker;
         $scope.setHere = setHere;
+        $scope.startChat = startChat;
         var allowedBounds = null;
+        var coords = [];
+        var infoChat;
 
         $scope.map = {
             center: {latitude: 0, longitude: 0},
-            zoom: 17
+            zoom: 17,
+            bounds: {}
         };
 
         //$scope.events = {
@@ -77,7 +83,7 @@ angular.module('Map', [])
                 latitude: 40.1451,
                 longitude: -99.6680
             },
-            options: { draggable: true },
+            options: {draggable: true},
             events: {
                 dragend: function (marker, eventName, args) {
                     console.log('marker dragend');
@@ -92,9 +98,6 @@ angular.module('Map', [])
                         labelClass: "marker-labels"
                     };
                 }
-            },
-            click: function(e){
-            infoWindow.open(e.map, e);
             }
         };
 
@@ -102,19 +105,18 @@ angular.module('Map', [])
         $ionicModal.fromTemplateUrl('modules/Map/modal/setMarker.html', {
             scope: $scope,
             animation: 'slide-in-up'
-        }).then(function(modal) {
-            console.log(modal);
+        }).then(function (modal) {
             $scope.modal = modal;
         });
 
-        $scope.openModal = function() {
+        $scope.openModal = function () {
             $scope.modal.show();
         };
-        $scope.closeModal = function() {
+        $scope.closeModal = function () {
             $scope.modal.hide();
         };
         //Cleanup the modal when we're done with it!
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
             $scope.modal.remove();
         });
 
@@ -141,7 +143,7 @@ angular.module('Map', [])
             $scope.options = {scrollwheel: false};
         });
 
-        function setMarker(){
+        function setMarker() {
             $ionicLoading.show({
                 template: 'Loading...'
             });
@@ -153,29 +155,81 @@ angular.module('Map', [])
             $ionicLoading.hide();
         }
 
-        function cutMarker(){
+        function cutMarker() {
             $scope.addMarker = false;
         }
 
-        function setHere(){
-            var coords = {};
-            coords.x = $scope.marker.coords.latitude;
-            coords.y = $scope.marker.coords.longitude;
+        function setHere() {
+            coords.push(($scope.marker.coords.latitude).toString(), ($scope.marker.coords.longitude).toString());
             $scope.openModal();
-            console.log(coords);
+        }
+
+        function startChat() {
+            $ionicLoading.show({
+                template: '<ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+            });
+            MapService.setMarker($rootScope.currentUser.userId, $scope.chat, coords)
+                .then(function (data) {
+                    if (data.status == 200) {
+                        MapService.getMarkers()
+                            .then(getAllChatMarkers());
+
+                        $ionicLoading.hide();
+                        $scope.addMarker = false;
+                        $scope.closeModal();
+                    }
+                })
+        }
+
+        function getAllChatMarkers() {
+            MapService.getMarkers()
+                .then(function (data) {
+                    $scope.allChatMarkers.length = 0;
+                    $scope.allChatMarkers = transformDataToMarkers(data.data);
+                });
+            //$scope.allChatMarkers
+        }
+
+        function transformDataToMarkers(data) {
+            var result = [];
+
+            angular.forEach(data, function (obj) {
+                var marker = {
+                    latitude: obj.position[0],
+                    longitude: obj.position[1],
+                    id: obj.id,
+                    title:  obj.chatName,
+                    name: obj.chatName,
+                    description: obj.description,
+                    markerClick: function(marker, ev, obj){
+
+                        if (infoChat) {
+                            infoChat.close();
+                        }
+
+                        var contentStr = '<div id="content">' +
+                            '<h3 id="firstHeading" class="firstHeading">'+ obj.name +'</h3>' +
+                            '<div id="bodyContent">' +
+                            '<p>'+ obj.description +'</p>' +
+                            '</div>' +
+                            '</div>';
+
+                        infoChat = new google.maps.InfoWindow({
+                            content: contentStr,
+                            maxWidth: 100
+                        });
+
+                        infoChat.open(marker.map, marker);
+                    }
+                };
+
+                result.push(marker);
+            });
+
+            return result;
         }
 
 
-        var contentString = '<div id="content">'+
-            '<h3 id="firstHeading" class="firstHeading">Chat 1</h3>'+
-            '<div id="bodyContent">'+
-            '<p><b>Chat 1</b>, here you can talk about <b>everything</b>.' +
-            '</div>'+
-            '</div>';
-
-        var infoWindow = new google.maps.InfoWindow({
-            content: contentString,
-            maxWidth: 100
-        });
+        getAllChatMarkers();
 
     });

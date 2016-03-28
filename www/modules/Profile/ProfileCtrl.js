@@ -20,18 +20,13 @@ angular.module('Profile', [])
             });
         }, 300);
 
-        $timeout(function () {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 4000
-            });
-        }, 1000);
-
         // Set Ink
         ionicMaterialInk.displayEffect();
 
         //Logic ====================================
         $scope.userId = $rootScope.currentUser.userId;
         $scope.userInfo = {};
+        $scope.news = [];
       //  $scope.status = $rootScope.currentUser.status;
        // $scope.statusPopup = statusPopup();
 
@@ -88,6 +83,15 @@ angular.module('Profile', [])
                     setStatus($scope.status.set);
                 }
             });
+        };
+
+        function getNews(){
+            ProfileService.getNews().then(function (result) {
+                $scope.news = result.results;
+                console.log($scope.news);
+            })
         }
+
+        getNews();
 
     });

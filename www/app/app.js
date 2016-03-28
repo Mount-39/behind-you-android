@@ -29,7 +29,7 @@ angular.module('app', [
 
         $rootScope.currentUser = {};
 
-        //DELETE BEFORE DEPLOY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //TODO DELETE BEFORE DEPLOY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         $rootScope.currentUser.userId = 5;
     })
 
